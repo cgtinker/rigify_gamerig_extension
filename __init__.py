@@ -25,8 +25,8 @@ bl_info = {
     "version":     (0, 0, 1),
     "blender":     (2, 90, 0),
     "location":    "Object Properties > Armature",
-    "wiki_url":    "https://github.com/cgtinker/BlendArMocap",
-    "tracker_url": "https://github.com/cgtinker/BlendArMocap/issues",
+    "wiki_url":    "https://github.com/cgtinker/rigify_gamerig_extension",
+    "tracker_url": "https://github.com/cgtinker/rigify_gamerig_extension/issues",
     "support":     "COMMUNITY",
     "category":    "Development"
 }
