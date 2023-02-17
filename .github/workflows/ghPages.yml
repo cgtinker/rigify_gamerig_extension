@@ -19,12 +19,16 @@ jobs:
     runs-on: ubuntu-latest
     concurrency: ci-${{ github.ref }}
     steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          architecture: x64
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Install and Build # # This example project is built using npm and outputs the result to the 'build' folder.
+      - name: Install and Build
         run: |
           cd docs
+          pip install -r requirements.txt
           make html
 
       - name: Deploy
