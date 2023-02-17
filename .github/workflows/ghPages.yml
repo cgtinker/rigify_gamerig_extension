@@ -30,10 +30,10 @@ jobs:
           mkdir build
           pip install -r requirements.txt
           make html
-          mv build/html build/docs
+          touch build/html/.nojekyll
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: docs/build
+          folder: docs/build/html
           clean: true
