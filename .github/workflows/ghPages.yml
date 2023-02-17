@@ -28,11 +28,13 @@ jobs:
       - name: Install and Build
         run: |
           cd docs
+          mkdir build
           pip install -r requirements.txt
           make html
+          ls
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build # folder the action should delopy
+          folder: docs/build # folder the action should delopy
           clean: true
