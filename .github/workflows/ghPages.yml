@@ -1,5 +1,4 @@
 # https://github.com/marketplace/actions/deploy-to-github-pages
-# based on https://github.com/bcgov/NotifyBC/blob/main/.github/workflows/ghPages.yml
 name: Build and Deploy
 
 on:
@@ -36,5 +35,5 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: docs/build/html
+          folder: docs
           clean: true
