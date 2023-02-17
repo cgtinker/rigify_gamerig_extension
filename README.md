@@ -2,14 +2,17 @@
 
 
 ### Motivation
-Exporting Rigify Rigs to *game engines* is often hard to archive.
-The _ungenerated_ rigify rigs however, do quiet well in game engines.
+Exporting rigify rigs to game engines is often hard to archive.
+The ungenerated rigify rigs also called **meta-rigs**, usually do quiet well in game engines.<br>
 
 This add-on should make this export process easier, 
-by providing an easy way to *mirrow animations* from the *generated rig* to *the meta-rig*.
+by providing an easy way to link animations from the generated rig to the meta-rig.
+Doing so, you may want to use the meta-rig as deform-rig.
+The generated-rig will serve as control-rig.
 
-Doing so, you may want to use the *meta-rig* as *deform-rig*.
-The *generated-rig* will serve as *control-rig*.
+**Caution**<br>
+This add-ons purposes is to link animations to meta-rigs for an easier export to game engines.
+The add-on may not be useful if you plan to animate and render within blender.
 
 
 ### Usage
