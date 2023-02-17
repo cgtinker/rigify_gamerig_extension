@@ -1,5 +1,8 @@
 # Rigify Gamerig Extension
 
+
+For more information, please read the [documentation](https://cgtinker.github.io/rigify_gamerig_extension/index.html).
+
 ### Concept:
 Easily copy animation data from a generated rigify rig to it's metarig.
 This way you may animate the generated rig and use the metarig as gamerig!
