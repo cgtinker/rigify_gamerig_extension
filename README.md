@@ -1,16 +1,26 @@
 # Rigify Gamerig Extension
 
 
-For more information, please read the [documentation](https://cgtinker.github.io/rigify_gamerig_extension/index.html).
+### Motivation
+Exporting Rigify Rigs to *game engines* is often hard to archive.
+The _ungenerated_ rigify rigs however, do quiet well in game engines.
 
-### Concept:
-Easily copy animation data from a generated rigify rig to it's metarig.
-This way you may animate the generated rig and use the metarig as gamerig!
+This add-on should make this export process easier, 
+by providing an easy way to *mirrow animations* from the *generated rig* to *the meta-rig*.
 
-0. Select Generated Rigify Rig and navigate to it's object properties.
-1. Select it's metarig in the 'Rigify Gamerig Extension' Panel.
-2. Bake animations to your likings and directly stash them to rna tracks.
-3. Unlink the metarig when you are done.
+Doing so, you may want to use the *meta-rig* as *deform-rig*.
+The *generated-rig* will serve as *control-rig*.
+
+
+### Usage
+0. Select an generated rigify rig and navigate to it's object properties.
+1. Select it's meta-rig in the 'Rigify Gamerig Extension' Panel.
+2. Bake animations to your likings and directly stash them to the meta-rigs rna tracks.
+3. Unlink the meta-rig when you are done.
+4. Use the meta-rig as deform rig and export it to a game engine.
+
+
+For more information, please refer to the [documentation](https://cgtinker.github.io/rigify_gamerig_extension/).
 
 
 Copyright (C) cgtinker, cgtinker.com, hello@cgtinker.com
