@@ -22,7 +22,7 @@ bl_info = {
     "name":        "Rigify Gamerig Extension",
     "description": "Gamerig extension for rigify",
     "author":      "cgtinker",
-    "version":     (0, 0, 1),
+    "version":     (0, 0, 2),
     "blender":     (2, 90, 0),
     "location":    "Object > Data Properties",
     "wiki_url":    "https://github.com/cgtinker/rigify_gamerig_extension",
@@ -113,7 +113,7 @@ class OT_CGT_LinkGenerated2MetaRig(bpy.types.Operator):
             d[bone.name] = ''
 
         # get bone references (atm locations at layer 29)
-        rig = bpy.data.objects['rig']
+        rig = context.object
         for bone in rig.data.bones:
             if bone.layers[29] or bone.use_deform:
                 name = bone.name

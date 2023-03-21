@@ -1,7 +1,7 @@
 #!/bin/bash
 
 name="rigify_gamerig_extension"
-version="_release_001"
+version="_release_002"
 dirpath=$(pwd)
 dirpath=${dirpath:-/}
 dirname="${dirpath##*/}"
