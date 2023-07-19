@@ -16,6 +16,7 @@ Copyright (C) cgtinker, cgtinker.com, hello@cgtinker.com
 '''
 
 import bpy
+import logging
 
 
 bl_info = {
@@ -60,7 +61,7 @@ class OBJECT_PT_RigifyExtensionUI(bpy.types.Panel):
     bl_context = "data"
 
     @classmethod
-    def poll(self, context):
+    def poll(cls, context):
         if not context.object:
             return False
         return context.object.type == 'ARMATURE' and context.active_object.data.get("rig_id") is not None
@@ -73,16 +74,22 @@ class OBJECT_PT_RigifyExtensionUI(bpy.types.Panel):
                         search_property="objects", text="Meta-Rig", icon="ARMATURE_DATA")
 
         if user.selected_metarig:
-            layout.row(align=True).operator("button.ot_cgt_link_generated_to_metarig", text="Link Meta-Rig", icon='ANIM')
+            layout.row(align=True).operator(
+                "button.ot_cgt_link_generated_to_metarig", text="Link Meta-Rig", icon='ANIM')
 
-            flow = layout.grid_flow(row_major=True, columns=0, even_columns=True, even_rows=True, align=True)
+            flow = layout.grid_flow(
+                row_major=True, columns=0, even_columns=True, even_rows=True, align=True)
             col = flow.row(align=True)
-            col.row(align=True).prop(data=user, property="frame_start", text="Frame Start")
-            col.row(align=True).prop(data=user, property="frame_end", text="Frame End")
+            col.row(align=True).prop(
+                data=user, property="frame_start", text="Frame Start")
+            col.row(align=True).prop(
+                data=user, property="frame_end", text="Frame End")
             flow.row(align=True).prop(data=user, property="bake_name", text="")
-            flow.row(align=True).operator("button.ot_cgt_bake_metarig", text="Bake Meta-Rig", icon='ACTION')
+            flow.row(align=True).operator("button.ot_cgt_bake_metarig",
+                                          text="Bake Meta-Rig", icon='ACTION')
 
-            layout.row(align=True).operator("button.ot_cgt_unlink_metarig", text="Unlink Meta-Rig", icon='REMOVE')
+            layout.row(align=True).operator(
+                "button.ot_cgt_unlink_metarig", text="Unlink Meta-Rig", icon='REMOVE')
 
 
 class OT_CGT_LinkGenerated2MetaRig(bpy.types.Operator):
@@ -110,9 +117,9 @@ class OT_CGT_LinkGenerated2MetaRig(bpy.types.Operator):
             return {'CANCELLED'}
 
         for bone in metarig.data.bones:
-            d[bone.name] = ''
+            d[bone.name] = None
 
-        # get bone references (atm locations at layer 29)
+        # get bone references (atm def bones are at layer 29)
         rig = context.object
         for bone in rig.data.bones:
             if bone.layers[29] or bone.use_deform:
@@ -120,14 +127,19 @@ class OT_CGT_LinkGenerated2MetaRig(bpy.types.Operator):
                 if name.startswith('DEF-'):
                     name = name.replace('DEF-', '')
                 if name not in d:
-                    d[name] = None
-                else:
-                    d[name] = bone.name
+                    continue
+
+                d[name] = bone.name
 
         # add constraints
         for key, value in d.items():
             if value != None:
-                constraint = metarig.pose.bones[key].constraints.new('COPY_TRANSFORMS')
+                if len(metarig.pose.bones[key].constraints) > 0:
+                    # metarig may not contain constraint bones besides copy transforms
+                    continue
+
+                constraint = metarig.pose.bones[key].constraints.new(
+                    'COPY_TRANSFORMS')
                 constraint.target = rig
                 constraint.subtarget = value
                 constraint.influence = 1
@@ -167,7 +179,8 @@ class OT_CGT_BakeMetaRig(bpy.types.Operator):
         # bake
         bpy.ops.object.mode_set(mode='POSE', toggle=False)
         bpy.ops.pose.select_all(action='SELECT')
-        bpy.ops.nla.bake(frame_start=user.frame_start, frame_end=user.frame_end, only_selected=False, visual_keying=True, clear_constraints=False, bake_types={'POSE'})
+        bpy.ops.nla.bake(frame_start=user.frame_start, frame_end=user.frame_end,
+                         only_selected=False, visual_keying=True, clear_constraints=False, bake_types={'POSE'})
         bpy.ops.pose.select_all(action='DESELECT')
         bpy.ops.object.mode_set(mode='OBJECT', toggle=False)
         bpy.ops.object.select_all(action='DESELECT')
@@ -175,7 +188,8 @@ class OT_CGT_BakeMetaRig(bpy.types.Operator):
 
         # stashing
         metarig.animation_data.action.name = user.bake_name
-        self.stash(metarig, metarig.animation_data.action, user.bake_name, user.frame_start)
+        self.stash(metarig, metarig.animation_data.action,
+                   user.bake_name, user.frame_start)
         bpy.ops.object.select_all(action='DESELECT')
 
         generated_rig.select_set(True)
@@ -217,12 +231,11 @@ classes = [
 ]
 
 
-
 def register():
     for cls in classes:
         bpy.utils.register_class(cls)
-    bpy.types.Scene.cgtinker_rigify_extension = bpy.props.PointerProperty(type=PG_CGT_Rigify_Extension_Properties)
-
+    bpy.types.Scene.cgtinker_rigify_extension = bpy.props.PointerProperty(
+        type=PG_CGT_Rigify_Extension_Properties)
 
 
 def unregister():
